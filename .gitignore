@@ -1,0 +1,38 @@
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Editors / IDEs
+.idea/
+.vscode/
+*.iml
+*.swp
+*.swo
+
+# Logs
+*.log
+logs/
+
+# Backup / temp files
+*.bak
+*.orig
+*~
+
+# Local env (safety net — sub-projects also ignore these)
+.env
+.env.local
+.env.*.local
+
+# Node (safety net)
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+
+# Java / Gradle (safety net)
+.gradle/
+build/
+bin/
+*.class
+hs_err_pid*.log
