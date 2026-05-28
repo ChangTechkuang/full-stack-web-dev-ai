@@ -1,0 +1,49 @@
+# Render Blueprint — https://render.com/docs/blueprint-spec
+# Importing this from Render's "New +" → "Blueprint" provisions the service below.
+# The Neon database is provisioned externally; its URL is pasted in as DB_URL.
+
+services:
+  - type: web
+    name: taskflow-backend
+    runtime: docker
+    plan: free                  # 512 MB RAM, 0.1 CPU, sleeps after 15 min idle
+    region: singapore           # closest free region for KH/SEA traffic — change if needed
+    rootDir: backend
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /actuator/health
+    autoDeploy: true            # rebuild on push to main
+    envVars:
+      # --- Database (Neon) ----------------------------------------------------
+      # Paste the JDBC form of your Neon connection string here.
+      # Example: jdbc:postgresql://ep-foo-123.aws.neon.tech/taskflowdb?sslmode=require
+      - key: DB_URL
+        sync: false
+      - key: DB_USERNAME
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+
+      # --- JWT ----------------------------------------------------------------
+      # Render generates a strong random value the first time the blueprint runs.
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_ACCESS_EXP_MS
+        value: "900000"           # 15 min
+      - key: JWT_REFRESH_EXP_MS
+        value: "1209600000"       # 14 days
+
+      # --- CORS ---------------------------------------------------------------
+      # Comma-separated list of allowed Vercel origins. Update after the
+      # frontend is deployed and you know its production URL.
+      - key: APP_CORS_ALLOWED_ORIGINS
+        sync: false
+
+      # --- Seed (portfolio demo accounts) -------------------------------------
+      - key: APP_SEED_ENABLED
+        value: "true"
+
+      # --- JVM ----------------------------------------------------------------
+      # Free tier is 512 MB — keep heap modest.
+      - key: JAVA_TOOL_OPTIONS
+        value: "-XX:+UseSerialGC -XX:MaxRAMPercentage=75 -Xss512k"
