@@ -20,7 +20,7 @@ export default function DashboardPage() {
   const [filters, setFilters] = React.useState<FilterState>({});
   const [page, setPage] = React.useState(0);
 
-  const query = useWorkRequestsList({ ...filters, page, size: 20 });
+  const query = useWorkRequestsList({ ...filters, page, size: 10 });
   const items = query.data?.items ?? [];
   const meta = query.data?.meta;
 

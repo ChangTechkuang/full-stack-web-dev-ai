@@ -35,7 +35,7 @@ export interface ListResult {
 
 export const workRequestsApi = {
   async list(filters: ListFilters = {}): Promise<ListResult> {
-    const { page = 0, size = 20, sort = "createdAt,desc", ...rest } = filters;
+    const { page = 0, size = 10, sort = "createdAt,desc", ...rest } = filters;
     const { data, meta } = await apiRequestPaged<WorkRequest[]>("/api/v1/work-requests", {
       method: "GET",
       query: { page, size, sort, ...rest },
