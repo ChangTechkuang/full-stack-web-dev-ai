@@ -4,6 +4,13 @@ Internal work-request management system. Employees submit requests, managers
 drive them through a status workflow. Built as a full-stack reference for
 AI-assisted development workflows with Claude Code.
 
+## Deploy
+# Web
+https://task-flow-dev.vercel.app/
+
+# API (render free hosting api and database)
+https://taskflow-backend-ug7a.onrender.com/swagger-ui/index.html#/
+
 ## Stack
 
 | Layer    | Tech                                                                |
